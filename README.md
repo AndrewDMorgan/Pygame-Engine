@@ -13,6 +13,9 @@ I'm hoping to add additional things I need for gamedevelopment. I'm not sure how
 * A color palette tool
 * A basic tilemap
 
+## Details
+It will only work if the files for Pygen are under a folder called Pygen which is placed in the same directory as your program
+
 ## Events.py
 - MouseStates (Enum)
     - pressed
@@ -82,5 +85,66 @@ I'm hoping to add additional things I need for gamedevelopment. I'm not sure how
         - font (default is "pixel2.ttf")
     - Public Variables
         - state (the state of the button in terms of the States enum within the class)
-- Too lazy to add the rest, but the code is fairly well commented
+- TypingBox extends Element (A prefab typing box)
+    - Public Variables
+        - text (the current text thats written in the box)
+        - selected (if the box is selected or not)
+    - Constructor Args
+        - pos
+        - size
+        - color
+        - cursorOffset (default is -2)
+        - baseText (default is "Type Here")
+        - textSize (default is 10)
+        - font (default is "pixel2.ttf")
+        - transparentColor (default is (255, 255, 255))
+- Slider extends Element (A prefab slider)
+    - Public Variables
+        - slide (the position of the slider, goes from 0 to 1)
+    - Constructor Args
+        - pos
+        - size
+        - color
+        - slide (default is 0.5 aka halfway)
+        - backgroundText (default is none)
+        - font (default is "pixel2.ttf")
+        - transparentColor (default is (255, 255, 255))
+
+## Sprites.py
+- LoadSpritesheet
+    - takes in:
+        - image (a surface, not a file path)
+        - tileSize
+        - transColor (default is (0, 0, 0))
+    - returns a list of surfaces (the tiles in the spritesheet)
+- ScaleSprites
+    - takes in:
+        - sprites (a list of surfaces)
+        - scale
+    - returns the list of sprites but scaled
+
+## TileMap.py
+- blankTile (a variable for a blank tile / an air tile)
+- TileMap
+    - Public Variables
+        - map (a 2D list of the tile numbers)
+        - tileSize (the size of the tiles)
+        - mapSize (a 2D tuple storing the size of the map)
+    - Constructor Args
+        - tileMapFile (the file path for the tile map)
+        - tiles (the tile surfaces, corresponding to the tile numbers)
+        - tileSize (the size of the tiles)
+    - GetGridPosition
+        - takes in a 2D position in a tuple
+        - returns a 2D index for the tileMap in a tuple
+    - GetTileNumber
+        - gets the tile number at a provided index (2D position)
+    - Render
+        - Takes in:
+            - screen (the display)
+            - cameraPos (position of the camera)
+            - screenSize (the size of the screen)
+        - returns nothing
+        - renders tile map to the screen
+
 
