@@ -24,6 +24,7 @@ class Manager:
         # the events that have happened
         self.events = []
         self.typed = []
+        self.held = []
 
         # the state of the mouse
         self.mouseStates = {"left": MouseStates.up, "right": MouseStates.up}
@@ -56,9 +57,12 @@ class Manager:
                 pygame.quit()
                 sys.exit()
             
-            # checking if a key was pressed down
+            # checking if a key was pressed down or up
             elif event.type == pygame.KEYDOWN:
                 self.events.append(event.key)
+                self.held.append(event.key)
+            elif event.type == pygame.KEYUP:
+                self.held.remove(event.key)
         
             # updating the mouses state
             elif event.type == pygame.MOUSEBUTTONDOWN:
