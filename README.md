@@ -1,12 +1,17 @@
 # Pygame-Engine
 A basic engine built on top of pygame to reduce repetitive code (eg. an event manager).
-I'm hoping to add things like tile maps and spritesheet readers. I'm not sure how far this probject will go. I would also like to add other helpful features like a particle system or entity system or something. Maybe even create an animation manager for more complicated animations.
+I'm hoping to add additional things I need for gamedevelopment. I'm not sure how far this probject will go. I would like to add other helpful features like a particle system or entity system or something. I migth even create an animation manager for more complicated animations. But I'm not sure how much I will actually create.
 
 ## Current Features:
 * An event manager
 * Text rendering
 * A base UI element class
 * A basic button
+* A typing box
+* A slider
+* A spritesheet loader
+* A color palette tool
+* A basic tilemap
 
 ## Events.py
 - MouseStates (Enum)
@@ -52,6 +57,7 @@ I'm hoping to add things like tile maps and spritesheet readers. I'm not sure ho
 - Element
     - Public Variables
         - pos
+        - forceUpdate (a boolean that forces the element to update the cash when true)
     - CreateRender
         - overwrite this to render your UI element
     - Update
@@ -74,6 +80,7 @@ I'm hoping to add things like tile maps and spritesheet readers. I'm not sure ho
         - text (default is no text)
         - textSize (default is 10)
         - font (default is "pixel2.ttf")
-        - textColor (default is black)
     - Public Variables
         - state (the state of the button in terms of the States enum within the class)
+- Too lazy to add the rest, but the code is fairly well commented
+
