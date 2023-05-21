@@ -7,6 +7,12 @@ import pygame, sys
 # ===================================================================================================================
 
 
+# the special keys (like command) which I couldn't find within pygame
+class Keys:
+    rightCommand = 1073742055  # the right command keycode
+    leftCommand = 1073742051  # the left command keycode
+
+
 # the mouse states
 class MouseStates (Enum):
     pressed = 0
