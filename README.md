@@ -22,6 +22,9 @@ It will only work if the files for Pygen are under a folder called Pygen which i
     - held
     - released
     - up
+- Keys (Enum)
+    - rightCommand (the intager value representing it)
+    - leftCommand (the intager value representing it)
 - Manager
     - Public Variables
         - events (a list of the gathered special events)
@@ -131,9 +134,10 @@ It will only work if the files for Pygen are under a folder called Pygen which i
         - tileSize (the size of the tiles)
         - mapSize (a 2D tuple storing the size of the map)
     - Constructor Args
-        - tileMapFile (the file path for the tile map)
+        - tileMapFile (the file path for the tile map), if None is put here, it will set it to the optional tileMap arg
         - tiles (the tile surfaces, corresponding to the tile numbers)
         - tileSize (the size of the tiles)
+        - tileMap (optional), provides the array/list representing the map
     - GetGridPosition
         - takes in a 2D position in a tuple
         - returns a 2D index for the tileMap in a tuple
@@ -146,5 +150,10 @@ It will only work if the files for Pygen are under a folder called Pygen which i
             - screenSize (the size of the screen)
         - returns nothing
         - renders tile map to the screen
+    - Copy
+        - returns a copy of the class
+    - Write
+        - takes in a file
+        - writes the classes map to a file
 
 
