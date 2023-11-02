@@ -17,8 +17,8 @@ def LoadSpritesheet(image: pygame.Surface, tileSize: tuple, transColor: tuple=(0
     sprites = []
 
     # looping through all the sprites
-    for y in range(numAcross):
-        for x in range(numHigh):
+    for y in range(numHigh):
+        for x in range(numAcross):
             # creating the indivdual tile and adding it
             surf = pygame.Surface((tileSize[0], tileSize[1]))
             surf.fill(transColor)
