@@ -2,7 +2,7 @@
 A basic engine built on top of pygame to reduce repetitive code (eg. an event manager).
 I'm hoping to add additional things I need for gamedevelopment. I'm not sure how far this probject will go. I would like to add other helpful features like a particle system or entity system or something. I migth even create an animation manager for more complicated animations. But I'm not sure how much I will actually create.
 
-![A simple game created using the engine (11/1/2023)]([https://github.com/AndrewDMorgan/Note-Manager/blob/main/Screen%20Shot%202022-11-01%20at%2010.51.47%20PM.png?raw=true](https://github.com/AndrewDMorgan/Pygame-Engine/blob/main/Screenshot%202023-11-01%20at%209.46.23%20PM.png)
+![A simple game created using the engine (11/1/2023)](https://github.com/AndrewDMorgan/Pygame-Engine/blob/main/Screenshot%202023-11-01%20at%209.46.23%20PM.png)
 
 ## Current Features:
 * An event manager
