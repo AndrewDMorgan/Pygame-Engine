@@ -30,7 +30,7 @@ class TileMap:
     def GetGridPosition(self, point: tuple) -> tuple:
         return (round(point[0] // self.tileSize), round(point[1] // self.tileSize))
 
-    # gets a tile
+    # gets a tile,
     def GetTileNumber(self, xy: tuple) -> object:
         # getting the tile and making sure the point isn't out of bounds
         if xy[0] not in range(0, self.mapSize[1]) or xy[1] not in range(0, self.mapSize[0]):
