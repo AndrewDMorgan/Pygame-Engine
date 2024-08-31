@@ -14,7 +14,7 @@ The image was taken from an older version of a game I'm creating using the engin
 * A slider
 * A spritesheet loader
 * A color palette tool
-* A basic tilemap
+* A basic tilemap (with options to enable depth sorting)
 
 ## Details
 It will only work if the files for Pygen are under a folder called Pygen which is placed in the same directory as your program
@@ -153,6 +153,10 @@ It will only work if the files for Pygen are under a folder called Pygen which i
             - screenSize (the size of the screen)
         - returns nothing
         - renders tile map to the screen
+    - RenderDepth
+        - same inputs, but the second to last argument is a dictionary with centers for every type of tile
+        - returns the tiles as objects in a list with assigned depths
+        - this enables you to sort them by depth with other objects
     - Copy
         - returns a copy of the class
     - Write
