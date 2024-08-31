@@ -11,6 +11,17 @@ blankTile = pygame.Surface((0, 0))
 blankTile.set_colorkey((0, 0, 0))
 
 
+# an object for a tile so it has a render function
+class TileObj:
+    def __init__(self, sprite: pygame.Surface, pos: tuple) -> None:
+        self.sprite = sprite
+        self.pos = pos
+    
+    # renders the object
+    def Render(self, screen: pygame.Surface) -> None:
+        screen.blit(self.sprite, self.pos)
+
+
 # a tile map
 class TileMap:
     # initializing the data
@@ -69,7 +80,53 @@ class TileMap:
         # drawing a boarder around the tilemap if it's been given a color
         if borderColor:
             pygame.draw.rect(screen, borderColor, [offset[0] - 2, offset[1] - 2, self.mapSize[1] * self.tileSize + 2, self.mapSize[0] * self.tileSize + 2], width=2)
+    
+    # returns the viewable tiles as objects with depths so it can be sorted (allowing the player to go infront and behind them)
+    def RenderDepth(self, screen: object, cameraPos: tuple, screenSize: tuple, tileCenters: dict, borderColor: tuple=None) -> list:
+        # getting the offset of the tileMap based on the camera pos and stuff
+        offset = [self.tileSize - (cameraPos[0] % self.tileSize), self.tileSize - (cameraPos[1] % self.tileSize)]
+        offset[0] -= (cameraPos[0] // self.tileSize+1) * self.tileSize
+        offset[1] -= (cameraPos[1] // self.tileSize+1) * self.tileSize
+        offset[0] += screenSize[0]//2
+        offset[1] += screenSize[1]//2
+        offset = [round(offset[0]), round(offset[1])]
 
+        # getting the position of the edges of the map
+        rightPos = offset[0] + self.mapSize[1] * self.tileSize
+        bottomPos = offset[1] + self.mapSize[0] * self.tileSize
+
+        # getting the overlap of the edges of the screen and the map
+        rightOverlap = self.mapSize[1] * self.tileSize + (screenSize[0] - rightPos)
+        bottomOverlap = self.mapSize[0] * self.tileSize + (screenSize[1] - bottomPos)
+        
+        # constraining the bounds of the map
+        left = min(math.floor(max(-offset[0], 0) / self.tileSize), self.mapSize[1])
+        top = min(math.floor(max(-offset[1], 0) / self.tileSize), self.mapSize[0])
+        right = min(math.ceil(max(rightOverlap, 0) / self.tileSize), self.mapSize[1])
+        bottom = min(math.ceil(max(bottomOverlap, 0) / self.tileSize), self.mapSize[0])
+
+        # stores the tiles and their depths
+        tileDepths = []
+
+        # rendering the tiles
+        for x in range(left, right):
+            for y in range(top, bottom):
+                # adding the object
+                depth = y*64 + tileCenters[self.map[y][x]]
+                tileDepths.append([
+                    TileObj(self.tiles[self.map[y][x]], (x * 64 + offset[0], y * 64 + offset[1])),
+                    depth,
+                    screen
+                ])
+                #screen.blit(self.tiles[self.map[y][x]], (x * 64 + offset[0], y * 64 + offset[1]))
+        
+        # drawing a boarder around the tilemap if it's been given a color
+        if borderColor:
+            pygame.draw.rect(screen, borderColor, [offset[0] - 2, offset[1] - 2, self.mapSize[1] * self.tileSize + 2, self.mapSize[0] * self.tileSize + 2], width=2)
+
+        # returning the tiles and their depths so they can be rendered later
+        return tileDepths
+    
     # saves to a file
     def Write(self, file: str) -> None:
         # generating the contents of the file (formated for human readability)
@@ -84,9 +141,6 @@ class TileMap:
         with open(file, 'w') as out:
             out.write(contents)
 
-
     # gets a copy of the tilemap
     def Copy(self) -> object:
         return TileMap(None, self.tiles, self.tileSize, [layer[::] for layer in self.map])
-
-
