@@ -32,6 +32,8 @@ class Manager:
         self.typed = []
         self.held = []
 
+        self.scrollSpeed = 0
+
         # the state of the mouse
         self.mouseStates = {"left": MouseStates.up, "right": MouseStates.up}
     
@@ -43,6 +45,7 @@ class Manager:
     def GetEvents(self) -> None:
         # updating the mouse pos
         self.mousePos = pygame.mouse.get_pos()
+        self.scrollSpeed = 0
 
         # resetting the events and type characters
         self.events = []
@@ -69,13 +72,21 @@ class Manager:
                 self.held.append(event.key)
             elif event.type == pygame.KEYUP:
                 self.held.remove(event.key)
-        
+
             # updating the mouses state
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                # 4 and < even are swiping down
+                # 5 and < odds are swiping up
                 if event.button == 1:  # left click
                     self.mouseStates["left"] = MouseStates.pressed
                 elif event.button == 3:  # right click
                     self.mouseStates["right"] = MouseStates.pressed
+                
+                elif event.button >= 4:
+                    if event.button//2 == event.button/2:  # even
+                        self.scrollSpeed = (event.button-2)/2
+                    else:  # odd
+                        self.scrollSpeed = -(event.button-3)/2
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:  # left click
                     self.mouseStates["left"] = MouseStates.realeased
