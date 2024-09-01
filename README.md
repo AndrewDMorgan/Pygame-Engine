@@ -20,6 +20,7 @@ The image was taken from an older version of a game I'm creating using the engin
 It will only work if the files for Pygen are under a folder called Pygen which is placed in the same directory as your program
 
 ## Events.py
+- scrollSpeed (variable)
 - MouseStates (Enum)
     - pressed
     - held
