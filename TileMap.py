@@ -40,7 +40,7 @@ class TileMap:
     # gets the position of a point in grid space
     def GetGridPosition(self, point: tuple) -> tuple:
         return (round(point[0] // self.tileSize), round(point[1] // self.tileSize))
-
+    
     # gets a tile,
     def GetTileNumber(self, xy: tuple) -> object:
         # getting the tile and making sure the point isn't out of bounds
@@ -82,7 +82,7 @@ class TileMap:
             pygame.draw.rect(screen, borderColor, [offset[0] - 2, offset[1] - 2, self.mapSize[1] * self.tileSize + 2, self.mapSize[0] * self.tileSize + 2], width=2)
     
     # returns the viewable tiles as objects with depths so it can be sorted (allowing the player to go infront and behind them)
-    def RenderDepth(self, screen: object, cameraPos: tuple, screenSize: tuple, tileCenters: dict, borderColor: tuple=None) -> list:
+    def RenderDepth(self, screen: object, cameraPos: tuple, screenSize: tuple, tileCenters: dict, borderColor: tuple=None, screenOffset: tuple=[0,0]) -> list:
         # getting the offset of the tileMap based on the camera pos and stuff
         offset = [self.tileSize - (cameraPos[0] % self.tileSize), self.tileSize - (cameraPos[1] % self.tileSize)]
         offset[0] -= (cameraPos[0] // self.tileSize+1) * self.tileSize
@@ -90,7 +90,7 @@ class TileMap:
         offset[0] += screenSize[0]//2
         offset[1] += screenSize[1]//2
         offset = [round(offset[0]), round(offset[1])]
-
+        
         # getting the position of the edges of the map
         rightPos = offset[0] + self.mapSize[1] * self.tileSize
         bottomPos = offset[1] + self.mapSize[0] * self.tileSize
@@ -107,14 +107,14 @@ class TileMap:
 
         # stores the tiles and their depths
         tileDepths = []
-
+        
         # rendering the tiles
         for x in range(left, right):
             for y in range(top, bottom):
                 # adding the object
                 depth = y*64 + tileCenters[self.map[y][x]]
                 tileDepths.append([
-                    TileObj(self.tiles[self.map[y][x]], (x * 64 + offset[0], y * 64 + offset[1])),
+                    TileObj(self.tiles[self.map[y][x]], (x * 64 + offset[0] + screenOffset[0], y * 64 + offset[1] + screenOffset[1])),
                     depth,
                     screen
                 ])
@@ -144,3 +144,5 @@ class TileMap:
     # gets a copy of the tilemap
     def Copy(self) -> object:
         return TileMap(None, self.tiles, self.tileSize, [layer[::] for layer in self.map])
+
+
